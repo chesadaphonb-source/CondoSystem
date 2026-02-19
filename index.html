@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE ELEGANCE RESIDENCE</title>
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-    <script src="/_sdk/element_sdk.js"></script>
-    <script src="/_sdk/data_sdk.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -71,31 +69,95 @@
             </div>
         </section>
 
-        <section id="contact" class="py-24 bg-[#0a0a0a]">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="grid lg:grid-cols-2 gap-16">
-                    <div>
-                        <h2 id="contact-title" class="font-display text-4xl md:text-5xl text-white mb-6">ลงทะเบียนรับข้อมูล</h2>
-                        <form id="contact-form" class="space-y-6 mt-8">
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <input type="text" id="input-name" required class="w-full bg-[#0a0a0a] border border-[#c9a961]/30 px-4 py-3 text-white" placeholder="ชื่อ-นามสกุล *">
-                                <input type="tel" id="input-phone" required class="w-full bg-[#0a0a0a] border border-[#c9a961]/30 px-4 py-3 text-white" placeholder="เบอร์โทรศัพท์ *">
-                            </div>
-                            <input type="email" id="input-email" required class="w-full bg-[#0a0a0a] border border-[#c9a961]/30 px-4 py-3 text-white" placeholder="อีเมล *">
-                            <select id="input-unit" class="w-full bg-[#0a0a0a] border border-[#c9a961]/30 px-4 py-3 text-white">
-                                <option value="">-- เลือกห้อง --</option>
+<section id="contact" class="py-24 bg-[#0a0a0a]">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+                <p class="text-[#c9a961] text-sm tracking-[0.3em] mb-4">PRIVILEGE ACCESS</p>
+                <h2 id="contact-title" class="font-display text-4xl md:text-5xl text-white mb-6">
+                    ลงทะเบียนรับข้อมูล <br><span class="gradient-gold">และสิทธิพิเศษ</span>
+                </h2>
+                <p class="text-gray-400 mb-8 max-w-md">
+                    ร่วมสัมผัสประสบการณ์การใช้ชีวิตที่เหนือระดับก่อนใคร 
+                    ลงทะเบียนเพื่อนัดหมายเข้าชมโครงการพร้อมรับข้อเสนอสุดพิเศษสำหรับยูนิตคัดสรร
+                </p>
+                <div class="space-y-4 text-sm text-gray-500">
+                    <p class="flex items-center gap-3">
+                        <span class="w-5 h-[1px] bg-[#c9a961]"></span> 
+                        Private Gallery Viewing
+                    </p>
+                    <p class="flex items-center gap-3">
+                        <span class="w-5 h-[1px] bg-[#c9a961]"></span> 
+                        Exclusive Unit Selection
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-[#1a1a1a] p-8 md:p-10 border border-[#c9a961]/20 shadow-2xl">
+                <form id="contact-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-[#c9a961]">ชื่อ-นามสกุล</label>
+                            <input type="text" id="input-name" required 
+                                class="w-full bg-[#0a0a0a] border border-[#c9a961]/30 px-4 py-3 text-white focus:border-[#c9a961] outline-none transition-all" 
+                                placeholder="Full Name">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-[#c9a961]">เบอร์โทรศัพท์</label>
+                            <input type="tel" id="input-phone" required 
+                                class="w-full bg-[#0a0a0a] border border-[#c9a961]/30 px-4 py-3 text-white focus:border-[#c9a961] outline-none transition-all" 
+                                placeholder="08X-XXX-XXXX">
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest text-[#c9a961]">อีเมล</label>
+                        <input type="email" id="input-email" required 
+                            class="w-full bg-[#0a0a0a] border border-[#c9a961]/30 px-4 py-3 text-white focus:border-[#c9a961] outline-none transition-all" 
+                            placeholder="email@address.com">
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-[#c9a961]">แบบห้องที่สนใจ</label>
+                            <select id="input-unit" class="w-full bg-[#0a0a0a] border border-[#c9a961]/30 px-4 py-3 text-white focus:border-[#c9a961] outline-none transition-all appearance-none">
+                                <option value="">-- กรุณาเลือก --</option>
                                 <option value="1 Bedroom Deluxe">1 Bedroom Deluxe</option>
                                 <option value="2 Bedroom Premium">2 Bedroom Premium</option>
                                 <option value="Penthouse Suite">Penthouse Suite</option>
                             </select>
-                            <button type="submit" id="submit-btn" class="w-full btn-gold py-4 text-[#0a0a0a] font-semibold tracking-wider flex items-center justify-center gap-2">
-                                <span>ส่งข้อมูล</span>
-                            </button>
-                        </form>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-[#c9a961]">งบประมาณ</label>
+                            <select id="input-budget" class="w-full bg-[#0a0a0a] border border-[#c9a961]/30 px-4 py-3 text-white focus:border-[#c9a961] outline-none transition-all appearance-none">
+                                <option value="">-- กรุณาเลือก --</option>
+                                <option value="5-10M">5 - 10 ล้านบาท</option>
+                                <option value="10-20M">10 - 20 ล้านบาท</option>
+                                <option value="20M+">20 ล้านบาทขึ้นไป</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest text-[#c9a961]">ข้อความเพิ่มเติม</label>
+                        <textarea id="input-message" rows="2" 
+                            class="w-full bg-[#0a0a0a] border border-[#c9a961]/30 px-4 py-3 text-white focus:border-[#c9a961] outline-none transition-all" 
+                            placeholder="ระบุสิ่งที่ท่านต้องการสอบถามพิเศษ..."></textarea>
+                    </div>
+
+                    <button type="submit" id="submit-btn" 
+                        class="w-full btn-gold py-4 text-[#0a0a0a] font-bold tracking-[0.2em] text-xs uppercase hover:tracking-[0.3em] transition-all flex items-center justify-center gap-2">
+                        <span>ส่งข้อมูลเพื่อรับสิทธิพิเศษ</span>
+                    </button>
+                    
+                    <p class="text-[10px] text-center text-gray-600 uppercase tracking-wider">
+                        Your privacy is important to us. All information is kept confidential.
+                    </p>
+                </form>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
 
         <section id="admin-section" class="py-24 bg-[#0f0f0f] hidden">
             <div class="max-w-7xl mx-auto px-6">
@@ -120,3 +182,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
