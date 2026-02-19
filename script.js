@@ -155,26 +155,29 @@ function renderLeads() {
     if (noLeads) noLeads.classList.add('hidden');
     const sortedLeads = [...leads].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-    container.innerHTML = sortedLeads.map(lead => `
-        <div class="bg-[#1a1a1a] border border-[#c9a961]/20 p-6">
-            <div class="flex flex-wrap items-start justify-between gap-4">
-                <div class="flex-1">
-                    <h4 class="font-display text-xl text-white">${escapeHtml(lead.name)}</h4>
-                    <p class="text-gray-400 text-sm">${escapeHtml(lead.email)} | ${escapeHtml(lead.phone)}</p>
-                    <p class="text-[#c9a961] text-sm mt-1">ห้องที่สนใจ: ${escapeHtml(lead.unit_interest)}</p>
-                    <p class="text-gray-500 text-xs mt-2 italic">${new Date(lead.created_at).toLocaleString('th-TH')}</p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <select onchange="updateLeadStatus('${lead.__backendId}', this.value)" class="bg-[#0a0a0a] border border-[#c9a961]/30 text-xs p-1 text-white">
-                        <option value="new" ${lead.status === 'new' ? 'selected' : ''}>ใหม่</option>
-                        <option value="contacted" ${lead.status === 'contacted' ? 'selected' : ''}>ติดต่อแล้ว</option>
-                        <option value="closed" ${lead.status === 'closed' ? 'selected' : ''}>ปิดการขาย</option>
-                    </select>
-                    <button onclick="confirmDeleteLead('${lead.__backendId}')" class="text-red-400 hover:text-red-300 transition-colors ml-2 text-sm">ลบ</button>
-                </div>
+container.innerHTML = sortedLeads.map(lead => `
+    <div class="bg-[#1a1a1a] border border-[#c9a961]/20 p-6">
+        <div class="flex flex-wrap items-start justify-between gap-4">
+            <div class="flex-1">
+                <h4 class="font-display text-xl text-white">${escapeHtml(lead.name)}</h4>
+                <p class="text-gray-400 text-sm">${escapeHtml(lead.email)} | ${escapeHtml(lead.phone)}</p>
+                
+                <p class="text-[#c9a961] text-sm mt-1">ห้องที่สนใจ: ${escapeHtml(lead.unit_interest)} | งบประมาณ: ${escapeHtml(lead.budget)}</p>
+                ${lead.message ? `<p class="text-gray-500 text-sm mt-1">ข้อความ: ${escapeHtml(lead.message)}</p>` : ''}
+                
+                <p class="text-gray-500 text-xs mt-2 italic">${new Date(lead.created_at).toLocaleString('th-TH')}</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <select onchange="updateLeadStatus('${lead.__backendId}', this.value)" class="bg-[#0a0a0a] border border-[#c9a961]/30 text-xs p-1 text-white">
+                    <option value="new" ${lead.status === 'new' ? 'selected' : ''}>ใหม่</option>
+                    <option value="contacted" ${lead.status === 'contacted' ? 'selected' : ''}>ติดต่อแล้ว</option>
+                    <option value="closed" ${lead.status === 'closed' ? 'selected' : ''}>ปิดการขาย</option>
+                </select>
+                <button onclick="confirmDeleteLead('${lead.__backendId}')" class="text-red-400 hover:text-red-300 transition-colors ml-2 text-sm">ลบ</button>
             </div>
         </div>
-    `).join('');
+    </div>
+`).join('');
 }
 
 // 5. Helper Functions
