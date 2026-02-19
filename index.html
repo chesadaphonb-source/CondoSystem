@@ -1,155 +1,97 @@
-<script>
-    // คัดลอกค่า Web App URL ที่ได้จากขั้นตอนที่ 1 มาวางตรงนี้
-    const SCRIPT_URL = 'ใส่_WEB_APP_URL_ของคุณที่นี่';
+<!DOCTYPE html>
+<html lang="th" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE ELEGANCE RESIDENCE | LUXURY LIVING</title>
+    
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="h-full font-body bg-[#0a0a0a] text-white overflow-x-hidden">
 
-    const defaultConfig = {
-      project_name: 'THE ELEGANCE',
-      tagline: 'LUXURY LIVING REDEFINED',
-      hero_title: 'THE ELEGANCE RESIDENCE',
-      contact_title: 'ลงทะเบียนรับข้อมูล'
-    };
-
-    let leads = [];
-
-    // ฟังก์ชันจำลอง SDK เพื่อให้กระทบโค้ดเดิมน้อยที่สุด
-    const dataSdkShim = {
-      async create(data) {
-        const response = await fetch(SCRIPT_URL, {
-          method: 'POST',
-          body: JSON.stringify({ action: 'create', ...data })
-        });
-        await refreshData();
-        return { isOk: response.ok };
-      },
-      async update(data) {
-        const response = await fetch(SCRIPT_URL, {
-          method: 'POST',
-          body: JSON.stringify({ action: 'update', ...data })
-        });
-        await refreshData();
-        return { isOk: response.ok };
-      },
-      async delete(data) {
-        const response = await fetch(SCRIPT_URL, {
-          method: 'POST',
-          body: JSON.stringify({ action: 'delete', ...data })
-        });
-        await refreshData();
-        return { isOk: response.ok };
-      }
-    };
-
-    async function refreshData() {
-      try {
-        const response = await fetch(SCRIPT_URL);
-        leads = await response.json();
-        document.getElementById('lead-count').textContent = `${leads.length} รายการ`;
-        renderLeads();
-      } catch (e) {
-        console.error("Fetch error:", e);
-      }
-    }
-
-    // แก้ไข initApp เดิม
-    async function initApp() {
-      // โหลดข้อมูลครั้งแรก
-      refreshData();
-      
-      // ตั้งค่า UI เริ่มต้น
-      document.getElementById('nav-logo').textContent = defaultConfig.project_name;
-      document.getElementById('hero-tagline').textContent = defaultConfig.tagline;
-      // ... ตั้งค่าอื่นๆ ตามโค้ดเดิมของคุณ ...
-    }
-
-    // แทนที่การเรียก window.dataSdk ด้วย dataSdkShim
-    const activeDataService = dataSdkShim;
-
-    // --- ส่วนฟังก์ชัน Render และ Event ต่างๆ (ยกมาจากโค้ดส่วนที่ 2 ของคุณ) ---
-    function renderLeads() {
-      const container = document.getElementById('leads-container');
-      const noLeads = document.getElementById('no-leads');
-      
-      if (leads.length === 0) {
-        container.innerHTML = '';
-        noLeads.classList.remove('hidden');
-        return;
-      }
-      noLeads.classList.add('hidden');
-
-      const sortedLeads = [...leads].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-      container.innerHTML = sortedLeads.map(lead => `
-        <div class="bg-[#1a1a1a] border border-[#c9a961]/20 p-6" data-lead-id="${lead.__backendId}">
-          <div class="flex flex-wrap items-start justify-between gap-4">
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-3 mb-2">
-                <h4 class="font-display text-xl text-white truncate">${escapeHtml(lead.name)}</h4>
-                <span class="px-2 py-1 text-xs ${lead.status === 'new' ? 'bg-green-600/20 text-green-400' : lead.status === 'contacted' ? 'bg-blue-600/20 text-blue-400' : 'bg-gray-600/20 text-gray-400'}">
-                  ${lead.status === 'new' ? 'ใหม่' : lead.status === 'contacted' ? 'ติดต่อแล้ว' : 'ปิดการขาย'}
-                </span>
-              </div>
-              <div class="grid md:grid-cols-3 gap-4 text-sm">
-                <div><span class="text-gray-500">อีเมล:</span> <span class="text-gray-300 ml-2">${escapeHtml(lead.email)}</span></div>
-                <div><span class="text-gray-500">โทร:</span> <span class="text-gray-300 ml-2">${escapeHtml(lead.phone)}</span></div>
-                <div><span class="text-gray-500">ห้อง:</span> <span class="text-[#c9a961] ml-2">${escapeHtml(lead.unit_interest || lead.unit)}</span></div>
-              </div>
-              ${lead.message ? `<p class="text-gray-400 text-sm mt-3 italic">"${escapeHtml(lead.message)}"</p>` : ''}
+    <nav class="fixed w-full z-50 transition-all duration-500 bg-[#0a0a0a]/80 backdrop-blur-md border-b border-[#c9a961]/20">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div id="nav-logo" class="font-display text-2xl tracking-[0.3em] text-[#c9a961]">THE ELEGANCE</div>
+            <div class="hidden md:flex gap-8 text-xs tracking-widest text-gray-400">
+                <a href="#hero" class="hover:text-[#c9a961] transition-colors">HOME</a>
+                <a href="#contact" class="hover:text-[#c9a961] transition-colors">REGISTER</a>
+                <a href="#admin" class="hover:text-[#c9a961] transition-colors">ADMIN</a>
             </div>
-            <div class="flex items-center gap-2">
-              <select onchange="updateLeadStatus('${lead.__backendId}', this.value)" class="bg-[#0a0a0a] border border-[#c9a961]/30 px-3 py-2 text-sm text-white">
-                <option value="new" ${lead.status === 'new' ? 'selected' : ''}>ใหม่</option>
-                <option value="contacted" ${lead.status === 'contacted' ? 'selected' : ''}>ติดต่อแล้ว</option>
-                <option value="closed" ${lead.status === 'closed' ? 'selected' : ''}>ปิดการขาย</option>
-              </select>
-              <button onclick="confirmDeleteLead('${lead.__backendId}')" class="text-red-400 hover:text-red-300 p-2">ลบ</button>
-            </div>
-          </div>
         </div>
-      `).join('');
-    }
+    </nav>
 
-    // แก้ไขฟังก์ชันการส่งฟอร์ม (Submit)
-    document.getElementById('contact-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const submitBtn = document.getElementById('submit-btn');
-      submitBtn.disabled = true;
-      
-      const leadData = {
-        name: document.getElementById('input-name').value,
-        email: document.getElementById('input-email').value,
-        phone: document.getElementById('input-phone').value,
-        unit_interest: document.getElementById('input-unit').value || 'ยังไม่ระบุ',
-        budget: document.getElementById('input-budget').value || 'ยังไม่ระบุ',
-        message: document.getElementById('input-message').value || '',
-        created_at: new Date().toISOString(),
-        status: 'new'
-      };
+    <section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-40"></div>
+        <div class="relative z-10 text-center px-6">
+            <h2 id="hero-tagline" class="text-[#c9a961] tracking-[0.5em] text-sm mb-4">LUXURY LIVING REDEFINED</h2>
+            <h1 class="font-display text-5xl md:text-8xl mb-8 tracking-tighter">THE ELEGANCE<br>RESIDENCE</h1>
+            <a href="#contact" class="inline-block border border-[#c9a961] px-10 py-4 text-xs tracking-[0.3em] hover:bg-[#c9a961] hover:text-black transition-all duration-500">EXPERIENCE NOW</a>
+        </div>
+    </section>
 
-      const result = await activeDataService.create(leadData);
-      if (result.isOk) {
-        showToast('ลงทะเบียนสำเร็จ!');
-        e.target.reset();
-      } else {
-        showToast('เกิดข้อผิดพลาด', 'error');
-      }
-      submitBtn.disabled = false;
-    });
+    <section id="contact" class="py-24 bg-[#0d0d0d]">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl mb-4">ลงทะเบียนรับข้อมูล</h2>
+                <div class="w-20 h-px bg-[#c9a961] mx-auto"></div>
+            </div>
 
-    async function updateLeadStatus(id, status) {
-      await activeDataService.update({ __backendId: id, status: status });
-      showToast('อัปเดตสถานะแล้ว');
-    }
+            <form id="contact-form" class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <input type="text" id="input-name" placeholder="ชื่อ-นามสกุล" required 
+                           class="w-full bg-transparent border-b border-gray-800 py-3 focus:border-[#c9a961] outline-none transition-colors">
+                    <input type="email" id="input-email" placeholder="อีเมล" required 
+                           class="w-full bg-transparent border-b border-gray-800 py-3 focus:border-[#c9a961] outline-none transition-colors">
+                </div>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <input type="tel" id="input-phone" placeholder="เบอร์โทรศัพท์" required 
+                           class="w-full bg-transparent border-b border-gray-800 py-3 focus:border-[#c9a961] outline-none transition-colors">
+                    <select id="input-unit" class="w-full bg-[#0d0d0d] border-b border-gray-800 py-3 focus:border-[#c9a961] outline-none transition-colors text-gray-400">
+                        <option value="">สนใจห้องประเภทใด</option>
+                        <option value="1 Bedroom">1 Bedroom (35 sq.m.)</option>
+                        <option value="2 Bedroom">2 Bedroom (65 sq.m.)</option>
+                        <option value="Penthouse">Penthouse</option>
+                    </select>
+                </div>
+                <input type="text" id="input-budget" placeholder="งบประมาณ (เช่น 5-10 ล้านบาท)" 
+                       class="w-full bg-transparent border-b border-gray-800 py-3 focus:border-[#c9a961] outline-none transition-colors">
+                <textarea id="input-message" rows="3" placeholder="ข้อความเพิ่มเติม" 
+                          class="w-full bg-transparent border-b border-gray-800 py-3 focus:border-[#c9a961] outline-none transition-colors resize-none"></textarea>
+                
+                <button type="submit" id="submit-btn" class="w-full py-5 bg-[#c9a961] text-black font-bold tracking-widest hover:bg-[#b89850] transition-colors disabled:opacity-50">
+                    SUBMIT REGISTRATION
+                </button>
+            </form>
+        </div>
+    </section>
 
-    async function deleteLead(id) {
-      await activeDataService.delete({ __backendId: id });
-      showToast('ลบข้อมูลแล้ว');
-    }
+    <section id="admin" class="py-24 border-t border-[#c9a961]/10">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-wrap items-end justify-between gap-6 mb-12">
+                <div>
+                    <h2 class="font-display text-4xl mb-2">Lead Management</h2>
+                    <p class="text-gray-500 text-sm">จัดการข้อมูลผู้ลงทะเบียน (<span id="lead-count">0 รายการ</span>)</p>
+                </div>
+                <button onclick="refreshData()" class="text-[#c9a961] text-xs tracking-widest hover:underline">REFRESH DATA</button>
+            </div>
 
-    // ฟังก์ชันอื่นๆ (showToast, escapeHtml, confirmDeleteLead) ให้คงเดิมไว้ตามที่คุณส่งมา
-    function showToast(m, t='success'){ /* ... โค้ดเดิม ... */ }
-    function escapeHtml(t){ /* ... โค้ดเดิม ... */ }
-    function confirmDeleteLead(id){ /* ... โค้ดเดิม ... */ }
+            <div id="no-leads" class="hidden text-center py-20 border border-dashed border-gray-800">
+                <p class="text-gray-600">ยังไม่มีผู้สนใจลงทะเบียนในขณะนี้</p>
+            </div>
 
-    // เริ่มต้นแอป
-    initApp();
-</script>
+            <div id="leads-container" class="space-y-4">
+                </div>
+        </div>
+    </section>
+
+    <footer class="py-12 text-center text-gray-600 text-[10px] tracking-[0.3em] uppercase border-t border-gray-900">
+        &copy; 2026 THE ELEGANCE RESIDENCE. ALL RIGHTS RESERVED.
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
