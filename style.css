@@ -1,29 +1,8 @@
-/* style.css */
+* { box-sizing: border-box; }
 
-/* การตั้งค่าพื้นฐาน */
-:root {
-    --gold: #c9a961;
-    --gold-light: #f4e4ba;
-    --dark: #0a0a0a;
-    --dark-grey: #1a1a1a;
-}
+.font-display { font-family: 'Cormorant Garamond', serif; }
+.font-body { font-family: 'Montserrat', sans-serif; }
 
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    background-color: var(--dark);
-    color: white;
-    font-family: 'Montserrat', sans-serif;
-}
-
-/* ฟอนต์สำหรับหัวข้อ */
-.font-display {
-    font-family: 'Cormorant Garamond', serif;
-}
-
-/* ตกแต่งตัวอักษรสีทองแบบ Gradient */
 .gradient-gold {
     background: linear-gradient(135deg, #c9a961 0%, #f4e4ba 50%, #c9a961 100%);
     -webkit-background-clip: text;
@@ -31,71 +10,67 @@ body {
     background-clip: text;
 }
 
-/* ตกแต่ง Input และ Select */
-input, select, textarea {
-    color: white !important;
+.btn-gold {
+    background: linear-gradient(135deg, #c9a961 0%, #e8d5a3 50%, #c9a961 100%);
+    transition: all 0.4s ease;
 }
 
-input::placeholder, textarea::placeholder {
-    color: #4b5563 !important; /* gray-600 */
-}
-
-select option {
-    background-color: var(--dark-grey);
-    color: white;
-}
-
-/* ตกแต่งปุ่ม SUBMIT */
-#submit-btn {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-#submit-btn:hover:not(:disabled) {
+.btn-gold:hover {
+    background: linear-gradient(135deg, #d4b46a 0%, #f0e0b0 50%, #d4b46a 100%);
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(201, 169, 97, 0.3);
-    letter-spacing: 0.2em;
+    box-shadow: 0 10px 40px rgba(201, 169, 97, 0.4);
 }
 
-#submit-btn:disabled {
-    background-color: #374151; /* gray-700 */
-    cursor: not-allowed;
+.card-hover {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* แอนิเมชันสำหรับ Card ของ Lead (ข้อมูลลูกค้า) */
-#leads-container > div {
-    animation: fadeIn 0.5s ease forwards;
+.card-hover:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.nav-link { position: relative; }
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, #c9a961, #f4e4ba);
+    transition: width 0.3s ease;
 }
 
-/* ตกแต่ง Scrollbar ให้ดูแพง */
-::-webkit-scrollbar {
-    width: 6px;
+.nav-link:hover::after { width: 100%; }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-::-webkit-scrollbar-track {
-    background: #0a0a0a;
+.animate-fade-in { animation: fadeInUp 0.8s ease forwards; }
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #c9a961;
+    box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.1);
 }
 
-::-webkit-scrollbar-thumb {
-    background: #c9a961;
-    border-radius: 10px;
+.toast {
+    animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
 }
 
-/* Responsive ปรับแต่งเพิ่มเติม */
-@media (max-width: 768px) {
-    .font-display {
-        font-size: 2.5rem;
-    }
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
 }
